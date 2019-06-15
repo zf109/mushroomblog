@@ -1,0 +1,7 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>Hi, {{ user.nickname }}!</h1>
+    {% for post in posts %}
+    <div><p>{{ post.author.nickname }} posted: <a href="{{ url_for('post', post_id=post.id) }}">{{ post.title }}</a></p></div>
+    {% endfor %}
+{% endblock %}

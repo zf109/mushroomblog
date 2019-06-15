@@ -1,0 +1,6 @@
+__pycache__
+.DS_Store
+configs/*
+!configs/test.env
+.pytest_cache
+tests/data/dummy_*

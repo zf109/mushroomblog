@@ -1,0 +1,16 @@
+version: "3"
+services:
+  mushroom-server:
+    image: mushroom/server
+    environment:
+      - DATABASE_URL=postgres://mushroom:P@ssW0rd_!@mushroom-db/mushroom_db
+    ports:
+      - 5000:5000
+  mushroom-db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=mushroom_db
+      - POSTGRES_USER=mushroom
+      - POSTGRES_PASSWORD=P@ssW0rd_!
+    ports:
+      - 5432:5432
