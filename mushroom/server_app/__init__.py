@@ -4,6 +4,7 @@ import os
 from PIL import Image
 from flask import Flask
 from flask_login import LoginManager
+from flaskext.markdown import Markdown
 
 from mushroom.persistence.db_manager import get_user
 from .config import Config as conf
@@ -36,6 +37,7 @@ def save_picture(form_picture):
 """bind the app to views/apis"""
 from .server import add_apis, add_views
 
+Markdown(flask_app)
 login_manager.init_app(flask_app)
 flask_app.config.from_object(conf)
 add_apis(flask_app)
