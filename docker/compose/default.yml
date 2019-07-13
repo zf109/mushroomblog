@@ -4,8 +4,6 @@ services:
     image: mushroom/server
     environment:
       - DATABASE_URL=postgres://mushroom:P@ssW0rd_!@mushroom-db/mushroom_db
-    ports:
-      - 5000:5000
   mushroom-db:
     image: postgres
     environment:
@@ -14,3 +12,10 @@ services:
       - POSTGRES_PASSWORD=P@ssW0rd_!
     ports:
       - 5432:5432
+  mushroom-nginx:
+    image: mushroom/nginx
+    ports:
+      - 443:443
+    environment:
+      - NGINX_UPSTREAM_HOST=http://mushroom-server:5000
+      - NGINX_TIMEOUT=60
