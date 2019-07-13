@@ -178,7 +178,8 @@ class Post(Saveable):
 
     @property
     def author_id(self):
-        self._author_id = self.author.id
+        if self.author:
+            self._author_id = self.author.id
         return self._author_id
 
     @author_id.setter
