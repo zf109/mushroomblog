@@ -61,7 +61,7 @@ def load_post_lv1(post_orm: PostOrm):
 
 def load_latest_posts(n=10):
     with db_session() as sess:
-        post_orms = sess.query(PostOrm).order_by('last_modified desc').limit(n)
+        post_orms = sess.query(PostOrm).order_by(PostOrm.last_modified.desc()).limit(n)
         return [load_post_lv1(post_orm) for post_orm in post_orms]
 
 
