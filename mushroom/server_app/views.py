@@ -40,14 +40,14 @@ class RegisterView(View):
 
     def dispatch_request(self):
         if current_user.is_authenticated:
-            return redirect(url_for('home'))
+            return redirect(url_for('home', _scheme="https", _external=True))
         form = RegistrationForm()
         if form.validate_on_submit():
             hashed_password = _hashpassword(form.password.data)
             m.create_user(username=form.username.data, nickname=form.nickname.data,
                      email=form.email.data, password=hashed_password)
             flash('Your account has been created! You are now able to log in', 'success')
-            return redirect(url_for('login'))
+            return redirect(url_for('login', _scheme="https", _external=True))
         return _render('register.html', title='Register', form=form)
 
 
@@ -68,7 +68,7 @@ class LoginView(View):
             else:
                 flash(f'Hello, {user.nickname}!')
                 login_user(user, remember=form.remember.data)
-                return redirect('/home')
+                return redirect(url_for('home', _scheme="https", _external=True))
         if requested.method == "GET":
             return _render('login.html', title='Sign In', form=form)
 
@@ -79,7 +79,7 @@ class LogoutView(View):
     def dispatch_request(self):
         """Logout"""
         logout_user()
-        return redirect(url_for('home'))
+        return redirect(url_for('home', _scheme="https", _external=True))
 
 class HomeView(View):
     def dispatch_request(self):
@@ -101,11 +101,11 @@ class AccountView(View):
             current_user.email = form.email.data
             m.save_user(current_user)
             flash('Your account has been updated!', 'success')
-            return redirect(url_for('account'))
+            return redirect(url_for('account', _scheme="https", _external=True))
         elif requested.method == 'GET':
             form.username.data = current_user.username
             form.email.data = current_user.email
-        image_file = url_for('static', filename='profile_pics/' + current_user.image_file)
+        image_file = url_for('static', filename='profile_pics/' + current_user.image_file, _scheme="https", _external=True)
         return _render('account.html', title='Account',
                             image_file=image_file, form=form)
 
@@ -125,7 +125,7 @@ class PostDeleteView(View):
             abort(403)
         m.delete_post(post.id)
         flash('Your post has been deleted!', 'success')
-        return redirect(url_for('home'))
+        return redirect(url_for('home', _scheme="https", _external=True))
 
 
 class PostDetailView(View):
@@ -161,7 +161,7 @@ class PostUpdateView(View):
             post.body = form.content.data
             m.save_post(post)
             flash('Your post has been updated!', 'success')
-            return redirect(url_for('post', post_id=post.id))
+            return redirect(url_for('post', post_id=post.id, _scheme="https", _external="True"))
         elif requested.method == 'GET':
             form.title.data = post.title
             form.content.data = post.body
