@@ -5,6 +5,7 @@ from flask_wtf import Form
 from flask_login import current_user
 from wtforms import StringField, BooleanField, TextAreaField, \
     SubmitField, PasswordField, FileField
+from wtforms.widgets import TextArea
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from flask_wtf.file import FileAllowed
 import mushroom.persistence.db_manager as m
